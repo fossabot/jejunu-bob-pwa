@@ -4,7 +4,7 @@
       <v-toolbar-title class="center">{{ week }}</v-toolbar-title>
     </v-toolbar>
     <v-content>
-      <v-expansion-panel v-model="panel" expand>
+      <v-expansion-panel v-if="isWeekday" v-model="panel" expand>
         <v-expansion-panel-content v-for="(value, time) in today" :key="time">
           <template v-slot:header>
             <div>{{ time }}</div>
@@ -24,6 +24,9 @@
           </v-card>
         </v-expansion-panel-content>
       </v-expansion-panel>
+      <div v-else class="weekend">
+        <v-icon color="black darken-2" x-large>weekend</v-icon>주말
+      </div>
     </v-content>
     <v-bottom-nav :active.sync="time" :value="true" absolute color="transparent">
       <v-btn color="teal" flat value="점심">
@@ -40,56 +43,67 @@
 </template>
 
 <script>
+import { request } from './api.js'
 export default {
     name: 'App',
     data: () => ({
+        isWeekday: true,
+        weekDict: {
+            1: '월요일',
+            2: '화요일',
+            3: '수요일',
+            4: '목요일',
+            5: '금요일'
+        },
         week: '월요일',
-		time: '점심',
-		timeKey: {점심: [true, false], 저녁: [false, true]},
+        time: '점심',
+        timeKey: { 점심: [true, false], 저녁: [false, true] },
         panel: [true, false],
-        // total: {},
-        today: {
-            점심: {
-                양식: ['등심돈가스(pork)/스프', '양배추샐러드', '단무지/김치'],
-                정식: ['에그스크램블볶음밥', '무된장국', '별미떡볶음', '김치'],
-                특식: [
-                    '보리밥',
-                    '돼지갈비찜(pork)',
-                    '무된장국',
-                    '편마늘멸치볶음',
-                    '브로콜리맛살무침',
-                    '김치'
-                ]
-			},
-			저녁: {
-                정식: [
-                    '쌀밥',
-                    '어묵탕',
-                    '쇠고기야채볶음(beef)',
-                    '톳무침',
-                    '김치'
-                ]
-            }
-        }
+        total: {},
+        today: {}
     }),
-	// created() {},
-	watch: {
-		time(newV) {
-			this.panel = this.timeKey[newV]
+    created() {
+        const weekday = new Date().getDay()
+        if (weekday === 0 || weekday === 7) {
+            this.isWeekday = false
+            return
 		}
-	},
+		this.week = this.weekDict[weekday]
+        request().then(data => {
+            this.total = data
+            this.isWeekday = true
+            this.today = this.total[weekday - 1]
+        })
+    },
+    watch: {
+        time(newV) {
+            this.panel = this.timeKey[newV]
+        }
+    },
     filters: {
         join: arr => arr.join(' ').replace(/\(.+\)/, '')
     },
     methods: {
         calcEnd: obj => Object.keys(obj).length - 1
     }
-};
+}
 </script>
 
 <style scoped>
 .center {
     margin: 0 auto;
+}
+
+.weekend {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 200px;
+}
+
+.weekend i {
+    font-size: 120px !important;
 }
 
 .v-bottom-nav {
