@@ -64,7 +64,7 @@ export default {
     }),
     created() {
         const weekday = new Date().getDay()
-        if (weekday === 0 || weekday === 7) {
+        if (weekday === 0 || weekday === 6) {
             this.isWeekday = false
             return
 		}
