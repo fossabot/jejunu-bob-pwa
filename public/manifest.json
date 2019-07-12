@@ -1,6 +1,6 @@
 {
-  "name": "jejunu-bob",
-  "short_name": "jejunu-bob",
+  "name": "제대뺘ㅃ",
+  "short_name": "제대뺘ㅃ",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
@@ -15,6 +15,7 @@
   ],
   "start_url": "./index.html",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "theme_color": "#F1F1F1"
 }
