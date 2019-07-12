@@ -8,6 +8,7 @@ module.exports = {
                 /\.map$/, 
                 /manifest\.json$/ 
             ],
-        }
+        },
+        themeColor: '#F1F1F1'
     }
 }
