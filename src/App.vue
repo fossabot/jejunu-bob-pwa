@@ -63,12 +63,12 @@ export default {
         today: {}
     }),
     created() {
-        const weekday = new Date().getDay()
+		const weekday = new Date().getDay()
+		this.week = this.weekDict[weekday]
         if (weekday === 0 || weekday === 6) {
             this.isWeekday = false
             return
 		}
-		this.week = this.weekDict[weekday]
         request().then(data => {
             this.total = data
             this.isWeekday = true
