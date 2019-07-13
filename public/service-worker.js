@@ -4,17 +4,18 @@ workbox.setConfig({
 
 workbox.precaching.precacheAndRoute([
 	'/',
+	'/manifest.json'
 ])
 
 workbox.routing.registerRoute(
-	new RegExp('/*.js'),
+	/\.js$/,
 	new workbox.strategies.StaleWhileRevalidate({
 		cacheName: 'js'
 	})
 )
 
 workbox.routing.registerRoute(
-	new RegExp('/*.css'),
+	/\.css$/,
 	new workbox.strategies.StaleWhileRevalidate({
 		cacheName: 'css'
 	})
