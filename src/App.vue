@@ -7,19 +7,17 @@
       <v-expansion-panel v-if="isWeekday" v-model="panel" expand>
         <v-expansion-panel-content v-for="(value, time) in today" :key="time">
           <template v-slot:header>
-            <div>{{ time }}</div>
+            <div v-text="time" />
           </template>
           <v-card>
             <v-list>
-              <template v-for="(menus, type, index) in value">
-                <v-list-tile :key="`${type}_list-tile`">
-                  <v-list-tile-content>
-                    <v-list-tile-title>{{menus | join}}</v-list-tile-title>
-                    <v-list-tile-sub-title v-text="type" />
-                  </v-list-tile-content>
-                </v-list-tile>
-                <v-divider v-if="index < calcEnd(value)" :key="`${type}_divider`" />
-              </template>
+              <v-list-tile v-for="(menus, type, index) in value" :key="`${type}_list-tile`">
+                <v-list-tile-content>
+                  <v-list-tile-title>{{menus | join}}</v-list-tile-title>
+                  <v-list-tile-sub-title v-text="type" />
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-divider v-if="index < calcEnd(value)" :key="`${type}_divider`" />
             </v-list>
           </v-card>
         </v-expansion-panel-content>
