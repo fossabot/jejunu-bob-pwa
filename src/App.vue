@@ -106,8 +106,8 @@ export default {
     font-size: 120px !important;
 }
 
-.v-bottom-nav {
+/* .v-bottom-nav {
     justify-content: space-between;
-}
+} */
 </style>
 
