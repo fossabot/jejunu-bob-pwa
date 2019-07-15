@@ -2,6 +2,7 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="center">{{ week }}</v-toolbar-title>
+      <open-source-license />
     </v-toolbar>
     <v-content>
       <v-expansion-panel v-if="isWeekday" v-model="panel" expand>
@@ -42,18 +43,23 @@
 
 <script>
 import { request } from './api.js'
+import OpenSourceLicense from './components/OpenSourceLicense'
+
 export default {
     name: 'App',
+    components: {
+        OpenSourceLicense
+    },
     data: () => ({
         isWeekday: true,
         weekDict: {
-			0: '일요일',
+            0: '일요일',
             1: '월요일',
             2: '화요일',
             3: '수요일',
             4: '목요일',
-			5: '금요일',
-			6: '토요일'
+            5: '금요일',
+            6: '토요일'
         },
         week: '월요일',
         time: '',
@@ -63,12 +69,12 @@ export default {
         today: {}
     }),
     created() {
-		const weekday = new Date().getDay()
-		this.week = this.weekDict[weekday]
+        const weekday = new Date().getDay()
+        this.week = this.weekDict[weekday]
         if (weekday === 0 || weekday === 6) {
             this.isWeekday = false
             return
-		}
+        }
         request().then(data => {
             this.total = data
             this.isWeekday = true
