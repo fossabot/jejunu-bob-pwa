@@ -41,7 +41,7 @@ workbox.routing.registerRoute(
 )
 
 workbox.routing.registerRoute(
-	'https://d19lb0v9rjjem3.cloudfront.net/index.json',
+	'https://meals-data.muhun.kim',
 	workbox.strategies.networkFirst({
 		cacheName: 'api'
 	})
