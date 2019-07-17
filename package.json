@@ -2,7 +2,7 @@
 	"name": "jejunu-bob-pwa",
 	"scripts": {
 		"serve": "webpack-dev-server --open",
-		"build": "webpack"
+		"build": "prod=true webpack"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.5.4",
