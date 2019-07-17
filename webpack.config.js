@@ -1,40 +1,39 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-
-const mode = process.env.prod ? 'production' : 'development'
+const mode = process.env.MODE
 
 module.exports = {
     mode,
-    entry: './src/index.jsx',
+    entry: './src/app.js',
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[chunkhash].js'
+        path: `${__dirname}/public/scripts`,
+        filename: 'app.min.js'
     },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.js$/,
                 use: 'babel-loader'
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test: /\.(html)$/,
-                loader: 'html-loader'
+                test: /\.(png|jpg|gif|svg)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 51200
+                        }
+                    }
+                ]
             }
         ]
     },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            template: 'public/index.html'
-        })
-    ]
+    devServer: {
+        historyApiFallback: true,
+        contentBase: `${__dirname}/public`,
+        port: 3000,
+        open: true
+    }
 }
