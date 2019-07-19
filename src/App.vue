@@ -69,12 +69,14 @@ export default {
         today: {}
     }),
     created() {
-        const weekday = new Date().getDay()
+        const date = new Date()
+        const weekday = date.getDay()
         this.week = this.weekDict[weekday]
         if (weekday === 0 || weekday === 6) {
             this.isWeekday = false
             return
         }
+        this.time = date.getHours() < 15 ? '점심' : '저녁'
         request().then(data => {
             this.total = data
             this.isWeekday = true
